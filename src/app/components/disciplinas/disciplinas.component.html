@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-sm-6" *ngIf="disciplinaSelecionada">
+      <div class="row">
+        <div class="mr-auto">
+          <app-titulo [titulo]="!disciplinaSelecionada.id ? 'Nova Disciplina' : 'Dados da Disciplina'"></app-titulo>
+        </div>
+        <div class="mt-1">
+          <button class="btn btn-sm btn-outline-danger" (click)="voltar()">
+            Fechar
+          </button>
+        </div>
+      </div>
+  
+      <form [formGroup]="disciplinaForm">
+        <div class="form-group">
+          <label for="nome">Nome</label>
+          <input type="text" formControlName="nome" class="form-control">
+        </div>
+        <div class="form-group">
+          <hr>
+          <button class="btn btn-success" (click)="salvarDisciplina()" [disabled]="!disciplinaForm.valid">Salvar</button>
+        </div>
+      </form>
+    </div>
+  
+    <div [ngClass]="{'col-sm-6': disciplinaSelecionada, 'col-sm-12': !disciplinaSelecionada}">
+      <app-titulo [titulo]="titulo"></app-titulo> 
+      <div class="col-sm-12">
+        <button class="btn btn-sm btn-success mb-2" (click)="novaDisciplina()">Nova Disciplina</button>
+      </div>
+      
+      <table class="table table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Visualizar</th>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let disciplina of disciplinas; let d = index">
+            <td><button (click)="disciplinaSelect(disciplina)"
+                class="text-dark btn btn-sm btn-outline-warning">Detalhe</button></td>
+            <th scope="row">{{d+1}}</th>
+            <td>{{disciplina.nome}}</td>
+            <td>
+              <div class="btn-group">
+                <!-- <button (click)="openModal(template, disciplina.id)" class="btn btn-sm btn-outline-primary">Editar</button> -->
+                <button class="btn btn-sm btn-outline-danger" (click)="deletarDisciplina(disciplina)">Deletar</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <ng-template #template>
+  </ng-template>
+  
